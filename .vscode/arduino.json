@@ -1,0 +1,6 @@
+{
+    "port": "COM3",
+    "board": "adafruit:nrf52:cplaynrf52840",
+    "configuration": "softdevice=s140v6,debug=l1",
+    "sketch": "arduino\\Blink\\Blink.ino"
+}

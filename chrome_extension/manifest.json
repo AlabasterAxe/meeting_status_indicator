@@ -1,0 +1,14 @@
+{
+  "name": "Meeting Status Notifier",
+  "version": "1.0",
+  "description": "notify people of the meeting status",
+  "permissions": ["tabs", "storage"],
+  "background" : {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}
