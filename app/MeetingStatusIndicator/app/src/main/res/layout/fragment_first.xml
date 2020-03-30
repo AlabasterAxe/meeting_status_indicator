@@ -6,32 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
-    <Button
-        android:id="@+id/button_first"
+    <EditText
+        android:id="@+id/endpoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="textUri"
+        android:text="@string/endpoint_text_field_placeholder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
-
-    <TextView
-        android:id="@+id/textview_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/saveButton" />
 
     <Button
-        android:id="@+id/onButton"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="on"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="349dp" />
+        android:layout_marginEnd="16dp"
+        android:text="@string/save_button_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="279dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

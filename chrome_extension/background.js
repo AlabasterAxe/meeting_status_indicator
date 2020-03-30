@@ -8,7 +8,7 @@ function handleRemovedTab(tabId, existingHangouts, signEndpoint) {
   if (tabIdx >= 0) {
     existingHangouts.splice(tabIdx)
     if (existingHangouts.length === 0) {
-      fetch(signEndpoint + "/off", {
+      fetch(signEndpoint + "/off?source=vc", {
         mode: "no-cors"
       });
     }
@@ -22,7 +22,7 @@ function handleRemovedTab(tabId, existingHangouts, signEndpoint) {
         const signEndpoint = value ? value.endpoint || DEFAULT_SIGN_ENDPOINT : DEFAULT_SIGN_ENDPOINT;
         if (changeInfo.url.startsWith(HANGOUTS_PREFIX)) {
           if (existingHangouts.length === 0) {
-            fetch(signEndpoint + "/on", {
+            fetch(signEndpoint + "/on?source=vc", {
               mode: "no-cors"
             });
           }
