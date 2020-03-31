@@ -1,10 +1,13 @@
 from flask import Flask
+from flask import request
 
 from gpiozero import LED
 from serial import Serial
+import threading
 
 app = Flask(__name__)
 ser = Serial('/dev/ttyACM0', 9600)
+sources = []
 
 
 @app.route('/')
@@ -13,13 +16,41 @@ def hello_world():
 
 @app.route('/off')
 def off():
-  ser.write('f'.encode('utf-8'))
+  source = request.args.get('source')
+  if source:
+    if source in sources:
+      sources.remove(source)
+
+      if not sources: 
+        display_available()
+      
+  
+  else:
+    display_available()
+
   return 'We have lift off.'
 
 @app.route('/on')
 def on():
-  ser.write('n'.encode('utf-8'))
+  source = request.args.get('source')
+  display_busy()
+  
+  if source and source not in sources:
+    sources.append(source)
+
   return 'We have lift on.'
 
-app.run(host="0.0.0.0")
+@app.after_request
+def show_stats(response):
+  print("These are the currently active sources:", sources)
+  print("This is the number of used threads:", threading.active_count())
+  return response
+
+def display_available():
+  ser.write('f'.encode('utf-8'))
+
+def display_busy():
+  ser.write('n'.encode('utf-8'))
+
+app.run(host="0.0.0.0", debug=True, threaded=False)
 
