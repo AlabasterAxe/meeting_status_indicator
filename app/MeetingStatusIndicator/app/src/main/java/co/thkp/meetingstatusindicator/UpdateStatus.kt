@@ -1,7 +1,6 @@
 package co.thkp.meetingstatusindicator
 
 import android.app.AlarmManager
-import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -18,14 +17,16 @@ class UpdateStatus : BroadcastReceiver() {
         val alarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val clockInfo = alarmManager.nextAlarmClock
-        var requestSuffix = "/off";
+        val preferences = context?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val endpoint = preferences?.getString(ENDPOINT_KEY, ENDPOINT);
+        var requestSuffix = "/off?source=nap";
         if (clockInfo != null) {
-            requestSuffix = "/on"
+            requestSuffix = "/on?source=nap"
         }
 
         val queue = Volley.newRequestQueue(context)
         val stringRequest = StringRequest(Request.Method.GET,
-            "$ENDPOINT$requestSuffix",
+            "$endpoint$requestSuffix",
             Response.Listener<String> { response ->
                 // Display the first 500 characters of the response string.
                 Log.i("meetingstatusindicator", "worked");
