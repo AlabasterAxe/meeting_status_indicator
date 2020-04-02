@@ -4,11 +4,27 @@ from flask import request
 from waitress import serve
 
 from gpiozero import LED
-from serial import Serial
+from serial import Serial, SerialException
 import threading
 
+from sys import exit
+
 app = Flask(__name__)
-ser = Serial('/dev/ttyACM0', 9600)
+
+possible_devices = ["/dev/ttyACM0", "/dev/ttyACM1"]
+max_connect_attempts = len(possible_devices) * 2
+
+ser = None
+num_connect_attempts = 0
+while ser is None and num_connect_attempts < max_connect_attempts: 
+  try:
+    ser = Serial(possible_devices[num_connect_attempts % len(possible_devices)], 9600)
+  except SerialException:
+    num_connect_attempts += 1
+
+if ser is None:
+  exit(1)
+
 sources = []
 
 
