@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import request
 
+from waitress import serve
+
 from gpiozero import LED
 from serial import Serial
 import threading
@@ -52,5 +54,4 @@ def display_available():
 def display_busy():
   ser.write('n'.encode('utf-8'))
 
-app.run(host="0.0.0.0", debug=True, threaded=False)
-
+serve(app, host="0.0.0.0", port=5000)
