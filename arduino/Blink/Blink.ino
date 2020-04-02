@@ -11,8 +11,8 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 char receivedChar;
 boolean newData = false;
-uint32_t available = pixels.Color(0, 50, 0);
-uint32_t busy = pixels.Color(50, 0, 0);
+uint32_t available = pixels.Color(0, 25, 0);
+uint32_t busy = pixels.Color(25, 0, 0);
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -36,7 +36,6 @@ void recvOneChar() {
 
 void showNewData() {
   if (newData == true) {
-    pixels.clear();  // Set all pixel colors to 'off'
     Serial.print("This just in ... ");
     Serial.println(receivedChar);
 
@@ -44,17 +43,25 @@ void showNewData() {
     uint32_t newColor;
 
     if (receivedChar == 'n') {
-      digitalWrite(LED_BUILTIN, HIGH);
       newColor = busy;
       shouldUpdate = true;
     } else if (receivedChar == 'f') {
-      digitalWrite(LED_BUILTIN, LOW);
       newColor = available;
       shouldUpdate = true;
     }
     newData = false;
     if (shouldUpdate) {
-      for (int i = 0; i < NUMPIXELS; i++) {  // For each pixel...
+      for (int i = 0; i < NUMPIXELS; i += 2) {  // For each pixel...
+
+        // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+        // Here we're using a moderately bright green color:
+        pixels.setPixelColor(i, newColor);
+
+        pixels.show();  // Send the updated pixel colors to the hardware.
+
+        delay(DELAYVAL);  // Pause before next pass through loop
+      }
+      for (int i = 1; i < NUMPIXELS; i += 2) {  // For each pixel...
 
         // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
         // Here we're using a moderately bright green color:
