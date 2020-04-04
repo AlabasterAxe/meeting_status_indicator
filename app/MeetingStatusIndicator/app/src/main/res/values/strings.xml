@@ -11,4 +11,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="endpoint_text_field_placeholder">Endpoint</string>
     <string name="save_button_label">Save</string>
+    <string name="request_row">%1$s: %2$s</string>
 </resources>

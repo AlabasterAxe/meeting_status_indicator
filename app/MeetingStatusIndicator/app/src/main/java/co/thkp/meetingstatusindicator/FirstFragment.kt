@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_first.*
 
 val ENDPOINT_KEY = "co.thkp.meetingstatusindicator.ENDPOINT"
 
@@ -35,5 +38,10 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.saveButton).setOnClickListener {
           preferences?.edit()?.putString(ENDPOINT_KEY, endpointField.text.toString())?.apply()
         }
+
+        val rv = view.findViewById<RecyclerView>(R.id.recyclerview)
+        val adapter = RequestAttemptListAdapter(view.context);
+        rv.adapter = adapter
+        rv.layoutManager = LinearLayoutManager(view.context)
     }
 }
