@@ -25,7 +25,7 @@ class RequestAttemptListAdapter internal constructor(
 
     override fun onBindViewHolder(holder: RequestAttemptViewHolder, position: Int) {
         val current = requestAttempts[position]
-        holder.requestAttemptItemView.text = "${current.url}: ${current.status}"
+        holder.requestAttemptItemView.text = "${current.requestDateTime.hours}:${current.requestDateTime.minutes} ${current.url}: ${current.status}"
     }
 
     internal fun setRequestAttempts(requestAttempts: List<RequestAttempt>) {

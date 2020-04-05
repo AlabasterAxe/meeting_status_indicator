@@ -1,15 +1,14 @@
 package co.thkp.meetingstatusindicator.data
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import co.thkp.meetingstatusindicator.model.RequestAttempt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(RequestAttempt::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(RequestAttempt::class), version = 2, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class MsiDatabase : RoomDatabase() {
 
     abstract fun requestAttemptDao(): RequestAttemptDao
@@ -28,7 +27,7 @@ abstract class MsiDatabase : RoomDatabase() {
                     context.applicationContext,
                     MsiDatabase::class.java,
                     "meeting_status_indicator"
-                ).addCallback(MsiDatabaseCallback(scope)).build()
+                ).addCallback(MsiDatabaseCallback(scope)).addMigrations(MIGRATION_1_2).build()
                 INSTANCE = instance
                 return instance
             }
@@ -45,9 +44,6 @@ abstract class MsiDatabase : RoomDatabase() {
 
         suspend fun populateDatabase(requestAttemptDao: RequestAttemptDao) {
             requestAttemptDao.deleteAll()
-
-            val req = RequestAttempt(id = null, url = "http://192.168.1.2:5000/on", status = "succeeded")
-            requestAttemptDao.insert(req)
         }
     }
 }

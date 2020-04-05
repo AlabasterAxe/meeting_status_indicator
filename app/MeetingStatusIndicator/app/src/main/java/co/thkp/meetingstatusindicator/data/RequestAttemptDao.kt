@@ -9,7 +9,7 @@ import co.thkp.meetingstatusindicator.model.RequestAttempt
 
 @Dao
 interface RequestAttemptDao {
-    @Query("SELECT * FROM request_attempt")
+    @Query("SELECT * FROM request_attempt ORDER BY datetime desc")
     fun getAllRequests(): LiveData<List<RequestAttempt>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
