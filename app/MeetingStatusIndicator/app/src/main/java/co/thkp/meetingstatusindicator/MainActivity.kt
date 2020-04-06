@@ -5,9 +5,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import co.thkp.meetingstatusindicator.viewmodel.RequestAttemptViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var requestAttemptViewModel: RequestAttemptViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +23,8 @@ class MainActivity : AppCompatActivity() {
             val updateStatusIntent: Intent = Intent(this, UpdateStatus::class.java)
             this.sendBroadcast(updateStatusIntent);
         }
+
+        requestAttemptViewModel = ViewModelProvider(this).get(RequestAttemptViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
