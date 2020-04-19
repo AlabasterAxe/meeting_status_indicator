@@ -13,20 +13,6 @@ from sys import exit
 
 app = Flask(__name__)
 
-possible_devices = ["/dev/ttyACM0", "/dev/ttyACM1"]
-max_connect_attempts = len(possible_devices) * 2
-
-ser = None
-num_connect_attempts = 0
-while ser is None and num_connect_attempts < max_connect_attempts: 
-  try:
-    ser = Serial(possible_devices[num_connect_attempts % len(possible_devices)], 9600, write_timeout=5)
-  except SerialException:
-    num_connect_attempts += 1
-
-if ser is None:
-  exit(1)
-
 sources = []
 
 ADAFRUIT_MANUFACTURER = "Adafruit LLC"
