@@ -30,8 +30,8 @@ def send(msg):
 def hello_world():
   return 'ok'
 
-@app.route('/off')
-def off():
+@app.route('/free')
+def free():
   source = request.args.get('source')
   if source:
     if source in sources:
@@ -44,17 +44,28 @@ def off():
   else:
     display_available()
 
-  return 'We have lift off.'
+  return 'We have lift free.'
 
-@app.route('/on')
-def on():
+@app.route('/busy')
+def busy():
   source = request.args.get('source')
   display_busy()
   
   if source and source not in sources:
     sources.append(source)
 
-  return 'We have lift on.'
+  return 'We have lift busy.'
+
+@app.route('/off')
+def off():
+  source = request.args.get('source')
+  display_busy()
+  
+  if source and source not in sources:
+    sources.append(source)
+
+  return 'We have lift off.'
+
 
 @app.after_request
 def show_stats(response):
@@ -70,6 +81,9 @@ def display_available():
   send('f')
 
 def display_busy():
-  send('n')
+  send('b')
+
+def display_off():
+  send('o')
 
 serve(app, host="0.0.0.0", port=5000)

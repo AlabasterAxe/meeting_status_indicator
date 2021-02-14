@@ -13,6 +13,7 @@ char receivedChar;
 boolean newData = false;
 uint32_t available = pixels.Color(0, 25, 0);
 uint32_t busy = pixels.Color(25, 0, 0);
+uint32_t off = pixels.Color(0, 0, 0);
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -42,11 +43,14 @@ void showNewData() {
     bool shouldUpdate = false;
     uint32_t newColor;
 
-    if (receivedChar == 'n') {
+    if (receivedChar == 'b') {
       newColor = busy;
       shouldUpdate = true;
     } else if (receivedChar == 'f') {
       newColor = available;
+      shouldUpdate = true;
+    } else if (receivedChar == 'o') {
+      newColor = off;
       shouldUpdate = true;
     }
     newData = false;
