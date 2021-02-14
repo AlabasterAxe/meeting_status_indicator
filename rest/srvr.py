@@ -59,7 +59,7 @@ def busy():
 @app.route('/off')
 def off():
   source = request.args.get('source')
-  display_busy()
+  display_off()
   
   if source and source not in sources:
     sources.append(source)
