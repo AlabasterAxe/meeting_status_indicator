@@ -66,6 +66,16 @@ def off():
 
   return 'We have lift off.'
 
+@app.route('/pelvic_massage')
+def pelvic_massage():
+  source = request.args.get('source')
+  display_pink()
+  
+  if source and source not in sources:
+    sources.append(source)
+
+  return 'I\'d massage your pelvis.'
+
 
 @app.after_request
 def show_stats(response):
@@ -85,5 +95,8 @@ def display_busy():
 
 def display_off():
   send('o')
+
+def display_pink():
+  send('s')
 
 serve(app, host="0.0.0.0", port=5000)
